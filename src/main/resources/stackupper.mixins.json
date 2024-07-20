@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "yuria.stackupper.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "stackupper.refmap.json",
+  "plugin": "yuria.stackupper.TransformerEngine",
+  "mixins": [
+    "minecraft.AnvilMenu",
+    "minecraft.Containers",
+    "minecraft.FunIntRangePatch",
+    "minecraft.size.ItemEntity",
+    "minecraft.size.ItemMixin",
+    "minecraft.size.ItemStackHandler"
+  ],
+  "client": [
+    "minecraft.ClientGuiGraphics"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

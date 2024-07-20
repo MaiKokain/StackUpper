@@ -1,0 +1,18 @@
+<transformers>
+    <class path="net/minecraft/world/Container" transformChildren="true">
+        <method name="getMaxStackSize" transformer="slotLimit" desc="()I"/>
+    </class>
+
+    <class path="net/minecraftforge/items/IItemHandler" transformChildren="true">
+        <method name="getSlotLimit" transformer="slotLimit" desc="(I)I"/>
+    </class>
+
+    <class path="net/minecraft/world/item/ItemStack">
+        <method name="getMaxStackSize" transformer="replaceIntReturn" desc="()I" />
+
+    </class>
+
+    <class path="net/minecraft/server/commands/GiveCommand">
+        <method name="giveItem" transformer="replaceInt" target="100" replacement="1"/>
+    </class>
+</transformers>

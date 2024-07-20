@@ -1,0 +1,11 @@
+<transformers>
+    <!--    Mekanism seems to use completely custom GUI stuff. BasicInventorySlot is essentially its version of Slot. Easy fix -->
+    <class path="mekanism.common.inventory.slot.BasicInventorySlot" transformChildren="true">
+        <method name="getLimit" transformer="slotLimit"/>
+    </class>
+
+    <!--    I think this fixes the amount that is crafted from QIO terminal when shift+clicking a recipe-->
+    <class path="mekanism.common.content.qio.QIOCraftingWindow" transformChildren="false">
+        <method name="calculateMaxCraftAmount" transformer="replace64"/>
+    </class>
+</transformers>

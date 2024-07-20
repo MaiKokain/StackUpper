@@ -1,0 +1,5 @@
+<transformers>
+    <class path="appeng.api.stacks.AEItemKey" transformChildren="true">
+        <method name="getMaxStackSize" transformer="replaceIntReturn"  desc="()I"/>
+    </class>
+</transformers>
