@@ -11,7 +11,8 @@
     "minecraft.FunIntRangePatch",
     "minecraft.size.ItemEntity",
     "minecraft.size.ItemMixin",
-    "minecraft.size.ItemStackHandler"
+    "minecraft.size.ItemStackHandler",
+    "minecraft.size.ItemStackMixin"
   ],
   "client": [
     "minecraft.ClientGuiGraphics"
