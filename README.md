@@ -6,9 +6,6 @@ Works from 1.20.5 upwards 1.21
 > [!IMPORTANT]
 > [Midnightlib](https://modrinth.com/mod/midnightlib) is a required dependency
 
-> [!IMPORTANT]
-> Tools that have the same component are also stackable (will be fixed in later updates)
-
 ### Possible future changes
 - Patch `DataComponents` calling `ExtraCodecs.intRange` instead of patching `ExtraCodecs.intRange` directly
 - Use PORTB BiggerStack's XML Util for item ruleset (or maybe custom instead)
