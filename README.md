@@ -7,7 +7,7 @@ Works from 1.20.5 upwards 1.21
 > [Midnightlib](https://modrinth.com/mod/midnightlib) is a required dependency
 
 ### Downloads
-[GitHub](https://github.com/MaiKokain/StackUpper/releases/latest) | [Modrinth](https://modrinth.com/mod/stackupper/latest)
+[GitHub](https://github.com/MaiKokain/StackUpper/releases/latest) | [Modrinth](https://modrinth.com/mod/stackupper/version/latest)
 
 ### Possible future changes
 - Patch `DataComponents` calling `ExtraCodecs.intRange` instead of patching `ExtraCodecs.intRange` directly
