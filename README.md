@@ -1,7 +1,7 @@
 # StackUpper (NeoForge)
 A minecraft mod that allows changing stacksize from 64 (or 99 (Mojang's max limit)) to 2^30 (1073741824)
 
-Works from 1.20.5 upwards 1.21
+Works from 1.20.5  upwards 1.21
 
 > [!IMPORTANT]
 > [Midnightlib](https://modrinth.com/mod/midnightlib) is a required dependency
