@@ -8,7 +8,6 @@
   "mixins": [
     "minecraft.AnvilMenu",
     "minecraft.Containers",
-    "minecraft.FunIntRangePatch",
     "minecraft.size.ItemEntity",
     "minecraft.size.ItemMixin",
     "minecraft.size.ItemStackHandler",
