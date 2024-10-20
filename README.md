@@ -5,7 +5,7 @@ A minecraft mod that allows changing stacksize from 64 (or 99 (Mojang's max limi
 > [Midnightlib](https://modrinth.com/mod/midnightlib) is an embedded dependency
 
 ### Downloads
-[GitHub](https://github.com/MaiKokain/StackUpper/releases/latest) | [Modrinth](https://modrinth.com/mod/stackupper/version/latest) | [CurseForge]()
+[GitHub](https://github.com/MaiKokain/StackUpper/releases/latest) | [Modrinth](https://modrinth.com/mod/stackupper/version/latest) | [CurseForge](https://www.curseforge.com/minecraft/mc-mods/stackupper/files)
 
 ### Possible future changes
 - Use PORTB BiggerStack's XML Util for item ruleset (or maybe custom instead)
