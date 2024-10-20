@@ -2,7 +2,7 @@
 A minecraft mod that allows changing stacksize from 64 (or 99 (Mojang's max limit)) to 2^30 (1073741824)
 
 > [!IMPORTANT]
-> [Midnightlib](https://modrinth.com/mod/midnightlib) is a required dependency
+> [Midnightlib](https://modrinth.com/mod/midnightlib) is an embedded dependency
 
 ### Downloads
 [GitHub](https://github.com/MaiKokain/StackUpper/releases/latest) | [Modrinth](https://modrinth.com/mod/stackupper/version/latest) | [CurseForge]()
