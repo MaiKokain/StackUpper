@@ -5,11 +5,10 @@ A minecraft mod that allows changing stacksize from 64 (or 99 (Mojang's max limi
 > [Midnightlib](https://modrinth.com/mod/midnightlib) is a required dependency
 
 ### Downloads
-[GitHub](https://github.com/MaiKokain/StackUpper/releases/latest) | [Modrinth](https://modrinth.com/mod/stackupper/version/latest)
+[GitHub](https://github.com/MaiKokain/StackUpper/releases/latest) | [Modrinth](https://modrinth.com/mod/stackupper/version/latest) | [CurseForge]()
 
 ### Possible future changes
 - Use PORTB BiggerStack's XML Util for item ruleset (or maybe custom instead)
-- Move `yuria.transformerlib` to subproject instead of putting it here
 - Add more mods compatibility (will be a submod)
 
 ## Building StackUpper

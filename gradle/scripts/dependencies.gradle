@@ -6,15 +6,11 @@ dependencies {
 
     implementation(jarJar("portb:SimpleLoggerWrapper:1.0"))
 
-    implementation(jarJar("io.github.llamalad7:mixinextras-neoforge:0.4.0")) {
-        jarJar.ranged(it, "[0.4.0,)")
-    }
-
     implementation(jarJar('com.thoughtworks.xstream:xstream:1.4.20')) {
         exclude group: "io.github.x-stream", module: 'mxparser'
     }
 
     annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
 
-    implementation("maven.modrinth:midnightlib:${project.midnightlib_version}")
+    implementation(jarJar("maven.modrinth:midnightlib:${project.midnightlib_version}"))
 }
