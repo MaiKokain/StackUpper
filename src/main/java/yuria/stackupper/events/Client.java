@@ -12,7 +12,7 @@ import yuria.stackupper.Constants;
 import yuria.stackupper.StackUpper;
 
 @OnlyIn(Dist.CLIENT)
-@EventBusSubscriber(value = Dist.CLIENT, modid = StackUpper.MODID)
+@EventBusSubscriber(value = Dist.CLIENT, modid = Constants.MODID)
 public class Client {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     static public void showTrueCount(ItemTooltipEvent event) {

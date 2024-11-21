@@ -1,0 +1,71 @@
+package yuria.stackupper;
+
+import net.minecraft.commands.Commands;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import yuria.sul.ast.core.Processor;
+
+import java.util.Locale;
+
+import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
+
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = Constants.MODID)
+public class StackUpperCommand {
+    @SubscribeEvent
+    public static void onRegisterCommand(final RegisterCommandsEvent event)
+    {
+        var command = Commands.literal("stackupper");
+
+        String debugProp = System.getProperty("stackupper.debug");
+
+        if (debugProp != null) {
+            command.then(Commands.literal("print_item_cached")
+                    .requires(s -> s.hasPermission(0))
+                    .executes(ctx -> {
+                        if (Constants.itemCollection.cache.isEmpty()) {
+                            StackUpper.LOGGER.error("ItemCollection is empty");
+                            return 0;
+                        }
+                        Constants.itemCollection.cache.forEach((k,v) -> StackUpper.LOGGER.info("item {} operator {} do-by {}", k.toString(), v.assignOperation, v.doOpBy));
+                        return SINGLE_SUCCESS;
+                    })
+            );
+
+            command.then(Commands.literal("print_mc_item_tags")
+                    .requires(s -> s.hasPermission(0))
+                    .executes(ctx -> {
+                        BuiltInRegistries.ITEM.forEach(i -> {
+                            ItemStack itemStack = new ItemStack(i);
+                            itemStack.getTags().forEach(i1 -> StackUpper.LOGGER.info("{} {}", i, i1));
+                        });
+                        return 0;
+                    })
+            );
+
+            command.then(Commands.literal("print_to_be_processed")
+                    .requires(s -> s.hasPermission(0))
+                    .executes(ctx -> {
+                        for (Object object : Processor.listener.toBeProcessed) {
+                            StackUpper.LOGGER.info("object class {}", object.getClass());
+                        }
+                        return 0;
+                    })
+            );
+        }
+
+        command.then(Commands.literal("reload")
+                .requires(s -> s.hasPermission(1))
+                .executes(ctx -> {
+                    if (!Constants.itemCollection.cache.isEmpty()) Constants.itemCollection.clear();
+                    Processor.processFileToArray(Constants.StackUpperLangFolder);
+                    Constants.astProccessor.start();
+                    return 0;
+                })
+        );
+
+        event.getDispatcher().register(command);
+    }
+}

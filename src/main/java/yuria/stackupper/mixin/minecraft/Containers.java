@@ -9,6 +9,6 @@ import yuria.stackupper.config.StackSize;
 public class Containers {
     @ModifyConstant(method = "dropItemStack", constant = {@Constant(intValue = 21), @Constant(intValue = 10)})
     private static int dropItemStack(int value) {
-        return StackSize.getMaxStackSize();
+        return Integer.MAX_VALUE;
     }
 }

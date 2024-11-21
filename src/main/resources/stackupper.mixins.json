@@ -9,7 +9,6 @@
     "minecraft.AnvilMenu",
     "minecraft.Containers",
     "minecraft.size.ItemEntity",
-    "minecraft.size.ItemMixin",
     "minecraft.size.ItemStackHandler",
     "minecraft.size.ItemStackMixin"
   ],

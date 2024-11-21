@@ -15,6 +15,6 @@ public class ItemEntity {
     private static int StackLimit(int val)
     {
 
-        return StackSize.getMaxStackSize();
+        return Integer.MAX_VALUE;
     }
 }

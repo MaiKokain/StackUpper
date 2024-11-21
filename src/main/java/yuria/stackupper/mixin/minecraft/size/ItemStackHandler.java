@@ -13,6 +13,6 @@ public class ItemStackHandler {
     )
     public int getSlotLimit(int val)
     {
-        return StackSize.getMaxStackSize();
+        return Integer.MAX_VALUE;
     }
 }

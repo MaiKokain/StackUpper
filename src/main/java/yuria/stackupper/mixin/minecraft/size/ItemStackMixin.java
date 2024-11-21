@@ -1,28 +1,33 @@
 package yuria.stackupper.mixin.minecraft.size;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.serialization.Codec;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import yuria.stackupper.config.StackSize;
+import yuria.stackupper.Constants;
+import yuria.stackupper.StackUpper;
+import yuria.sul.ast.AssignOperation;
+import yuria.sul.ast.item.ItemProperty;
 
 @Mixin(value = ItemStack.class, remap = false)
 public class ItemStackMixin {
-    @Inject(
+    @ModifyReturnValue(
             method = "getMaxStackSize",
-            at = @At("RETURN"),
-            cancellable = true
+            at = @At("RETURN")
     )
-    private void setMaxStackSize(CallbackInfoReturnable<Integer> cir)
+    private int getMaxStackFalse(int orig)
     {
-        if (cir.getReturnValue() > 1) {
-            cir.cancel();
-            cir.setReturnValue(StackSize.getMaxStackSize());
-        }
+        ItemStack itemStack = (ItemStack) (Object)this;
+        ItemProperty itemProperty = Constants.itemCollection.get(itemStack.getItem());
+
+        if (itemProperty == null) return orig;
+
+        if (itemProperty.assignOperation == AssignOperation.EQUAL) return Math.max(itemProperty.doOpBy, 1);
+
+        return Math.max(itemProperty.assignOperation.apply(itemProperty.doOpBy, orig), 1);
     }
 
     @WrapOperation(
@@ -31,6 +36,6 @@ public class ItemStackMixin {
     )
     private static Codec<Integer> idekLOL(int pMin, int pMax, Operation<Codec<Integer>> original)
     {
-        return original.call(pMin, StackSize.MAX_ALLOWED);
+        return original.call(pMin, Integer.MAX_VALUE);
     }
 }
