@@ -10,7 +10,10 @@ dependencies {
         exclude group: "io.github.x-stream", module: 'mxparser'
     }
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
+    antlr 'org.antlr:antlr4:4.13.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    implementation(jarJar("maven.modrinth:midnightlib:${project.midnightlib_version}"))
+    testImplementation "net.neoforged:testframework:${neo_version}"
 }
+
