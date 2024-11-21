@@ -12,7 +12,7 @@ import java.util.Locale;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = Constants.MODID)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = StackUpper.MODID)
 public class StackUpperCommand {
     @SubscribeEvent
     public static void onRegisterCommand(final RegisterCommandsEvent event)
@@ -25,11 +25,11 @@ public class StackUpperCommand {
             command.then(Commands.literal("print_item_cached")
                     .requires(s -> s.hasPermission(0))
                     .executes(ctx -> {
-                        if (Constants.itemCollection.cache.isEmpty()) {
+                        if (StackUpper.itemCollection.cache.isEmpty()) {
                             StackUpper.LOGGER.error("ItemCollection is empty");
                             return 0;
                         }
-                        Constants.itemCollection.cache.forEach((k,v) -> StackUpper.LOGGER.info("item {} operator {} do-by {}", k.toString(), v.assignOperation, v.doOpBy));
+                        StackUpper.itemCollection.cache.forEach((k,v) -> StackUpper.LOGGER.info("item {} operator {} do-by {}", k.toString(), v.assignOperation, v.doOpBy));
                         return SINGLE_SUCCESS;
                     })
             );
@@ -59,9 +59,9 @@ public class StackUpperCommand {
         command.then(Commands.literal("reload")
                 .requires(s -> s.hasPermission(1))
                 .executes(ctx -> {
-                    if (!Constants.itemCollection.cache.isEmpty()) Constants.itemCollection.clear();
-                    Processor.processFileToArray(Constants.StackUpperLangFolder);
-                    Constants.astProccessor.start();
+                    if (!StackUpper.itemCollection.cache.isEmpty()) StackUpper.itemCollection.clear();
+                    StackUpper.astProccessor.processFileToArray(StackUpper.StackUpperLangFolder);
+                    StackUpper.astProccessor.start();
                     return 0;
                 })
         );

@@ -21,7 +21,7 @@ public class ItemStackMixin {
     private int getMaxStackFalse(int orig)
     {
         ItemStack itemStack = (ItemStack) (Object)this;
-        ItemProperty itemProperty = Constants.itemCollection.get(itemStack.getItem());
+        ItemProperty itemProperty = StackUpper.itemCollection.get(itemStack.getItem());
 
         if (itemProperty == null) return orig;
 

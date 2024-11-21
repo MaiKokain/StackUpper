@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import yuria.stackupper.Constants;
 import yuria.stackupper.StackUpper;
+import yuria.stackupper.StackUpperCommand;
 import yuria.sul.StackUpperBaseListener;
 import yuria.sul.StackUpperParser;
 import yuria.sul.ast.item.ItemHandler;
@@ -47,7 +48,7 @@ public class SULangListener extends StackUpperBaseListener {
             return;
         }
 
-        Constants.itemCollection.put(
+        StackUpper.itemCollection.put(
                 new ItemProperty(
                         BuiltInRegistries.ITEM.get(ResourceLocation.parse(cleanKeyId)),
                         assignOperation,

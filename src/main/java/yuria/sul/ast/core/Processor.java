@@ -20,7 +20,7 @@ public class Processor {
     private static final ArrayList<Path> filesToRead = new ArrayList<>();
     public static SULangListener listener = null;
 
-    public static void processFileToArray(File folder)
+    public void processFileToArray(File folder)
     {
         if (!filesToRead.isEmpty()) filesToRead.clear();
         if (!folder.isDirectory()) throw new RuntimeException(String.format("%s is expected to be a folder!", folder.getAbsolutePath()));
@@ -28,6 +28,8 @@ public class Processor {
             filesToRead.add(Path.of(file.getAbsolutePath()));
         }
     }
+
+    public Processor() {}
 
     public Processor(File folder)
     {
@@ -73,7 +75,8 @@ public class Processor {
 
     public void start()
     {
-        for (Path file : filesToRead) {
+        if (filesToRead.isEmpty()) return;
+        for (Path file : Objects.requireNonNull(filesToRead)) {
             compile(file);
         }
     }

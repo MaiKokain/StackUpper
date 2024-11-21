@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import portb.slw.MyLoggerFactory;
-import yuria.stackupper.config.StackSize;
 import yuria.transformerlib.TransformerLib;
 
 import java.util.EnumSet;
@@ -39,7 +38,7 @@ public class TransformerEngine implements IMixinConfigPlugin {
         //don't create the logger in BiggerStacks class constructor. It is called way too late.
         TransformerLib.LOGGER = MyLoggerFactory.createMyLogger(LoggerFactory.getLogger(TransformerLib.class));
         //library needs to know how to get the maximum stack size
-        TransformerLib.setGlobalStackLimitSupplier(StackSize::getMaxStackSize);
+        TransformerLib.setGlobalStackLimitSupplier(Constants.maxIntSupplier);
 
         TransformerLib.loadTransformers(TransformerEngine.class);
 

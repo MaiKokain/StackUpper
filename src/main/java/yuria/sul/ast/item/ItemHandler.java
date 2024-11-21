@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import yuria.stackupper.Constants;
 import yuria.stackupper.StackUpper;
+import yuria.stackupper.StackUpperCommand;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -29,18 +30,18 @@ public class ItemHandler {
                     specialItemProperties.forEach(i -> {
                         if (i instanceof UnfiliteredItemProperty.ItemPropertySize itemProperty) {
                             if (itemProperty.comparisonOperator.test(itemProperty.compareBy, itemStack.getMaxStackSize())) {
-                                Constants.itemCollection.put(new ItemProperty(item, itemProperty.assignOperation, itemProperty.assingBy));
+                                StackUpper.itemCollection.put(new ItemProperty(item, itemProperty.assignOperation, itemProperty.assingBy));
                             }
                         } else if (i instanceof UnfiliteredItemProperty.ItemPropertyId itemProperty) {
 
                             if (!Pattern.matches(itemProperty.toMatch, item.toString())) return;
-                            Constants.itemCollection.put(new ItemProperty(item, itemProperty.assignOperation, itemProperty.assingBy));
+                            StackUpper.itemCollection.put(new ItemProperty(item, itemProperty.assignOperation, itemProperty.assingBy));
 
                         } else if (i instanceof UnfiliteredItemProperty.TagItemProperty itemProperty) {
                             if (itemProperty.isRegex) {
                                 itemStack.getTags().forEach(t -> {
                                     if (t.location().toString().matches(itemProperty.tag)) {
-                                        Constants.itemCollection.put(new ItemProperty(item, itemProperty.assignOperation, itemProperty.assingBy));
+                                        StackUpper.itemCollection.put(new ItemProperty(item, itemProperty.assignOperation, itemProperty.assingBy));
                                     }
                                 });
                                 return;
@@ -48,7 +49,7 @@ public class ItemHandler {
 
                             itemStack.getTags().forEach(t -> {
                                 if (t.equals(new TagKey<>(Registries.ITEM, ResourceLocation.parse(itemProperty.tag)))) {
-                                    Constants.itemCollection.put(new ItemProperty(item, itemProperty.assignOperation, itemProperty.assingBy));
+                                    StackUpper.itemCollection.put(new ItemProperty(item, itemProperty.assignOperation, itemProperty.assingBy));
                                 }
                             });
                         }
