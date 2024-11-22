@@ -24,16 +24,18 @@ public class ItemStackMixin {
 
         if (itemProperty == null) return orig;
 
-        if (itemProperty.assignOperation == AssignOperation.EQUAL) return Math.max(itemProperty.doOpBy, 1);
+        if (itemProperty.assignOperation == AssignOperation.EQUAL) return (int) Math.max(itemProperty.doOpBy, 1);
 
-        return Math.max(itemProperty.assignOperation.apply(itemProperty.doOpBy, orig), 1);
+        long toSet = itemProperty.assignOperation.apply(itemProperty.doOpBy, (long) orig).longValue();
+
+        return (int) Math.min(Math.max(toSet, 1), Integer.MAX_VALUE);
     }
 
     @WrapOperation(
-            method = "lambda$static$3",
+            method = "lambda$static$1",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/util/ExtraCodecs;intRange(II)Lcom/mojang/serialization/Codec;")
     )
-    private static Codec<Integer> idekLOL(int pMin, int pMax, Operation<Codec<Integer>> original)
+    private static Codec<Integer> ItemStackCodecRangePatch(int pMin, int pMax, Operation<Codec<Integer>> original)
     {
         return original.call(pMin, Integer.MAX_VALUE);
     }

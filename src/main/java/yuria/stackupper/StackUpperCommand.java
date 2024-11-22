@@ -8,8 +8,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import yuria.sul.ast.core.Processor;
 
-import java.util.Locale;
-
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = StackUpper.MODID)

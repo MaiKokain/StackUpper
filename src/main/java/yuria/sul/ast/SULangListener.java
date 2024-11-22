@@ -34,7 +34,8 @@ public class SULangListener extends StackUpperBaseListener {
         TerminalNode keyId = ctx.getToken(StackUpperParser.STRING, 0);
         String cleanKeyId = keyId.getText().replaceAll( "\"", "");
         AssignOperation assignOperation = AssignOperation.from(parent.assignOp().getText());
-        Integer opNumber = Integer.valueOf(parent.NUMBER().getText());
+        long opNumber = Long.parseLong(parent.NUMBER().getText());
+
         if (ctx.TILDE() != null)
         {
             cleanKeyId = cleanKeyId.replaceAll("\\*", ".*");
@@ -50,7 +51,7 @@ public class SULangListener extends StackUpperBaseListener {
 
         StackUpper.itemCollection.put(
                 new ItemProperty(
-                        BuiltInRegistries.ITEM.get(ResourceLocation.parse(cleanKeyId)),
+                        BuiltInRegistries.ITEM.get(ResourceLocation.parse(cleanKeyId)).get().value(),
                         assignOperation,
                         opNumber
                 )
@@ -63,7 +64,7 @@ public class SULangListener extends StackUpperBaseListener {
         StackUpperParser.ProgramStatementsContext programStatementsContext = (StackUpperParser.ProgramStatementsContext) ctx.getParent();
         String tagInput = ctx.STRING().getText().replaceAll("[\"#]", "");
         AssignOperation assignOperation = AssignOperation.from(programStatementsContext.assignOp().getText());
-        Integer doOpBy = Integer.valueOf(programStatementsContext.NUMBER().getText());
+        long doOpBy = Long.parseLong(programStatementsContext.NUMBER().getText());
 
         if (ctx.TILDE() != null) {
             tagInput = tagInput.replaceAll("\\*", ".*");

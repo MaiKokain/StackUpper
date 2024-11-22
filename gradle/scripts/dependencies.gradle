@@ -2,8 +2,6 @@ apply from: 'gradle/scripts/repositories.gradle'
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
-    jarJar.enable()
-
     implementation(jarJar("portb:SimpleLoggerWrapper:1.0"))
 
     implementation(jarJar('com.thoughtworks.xstream:xstream:1.4.20')) {
@@ -15,5 +13,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     testImplementation "net.neoforged:testframework:${neo_version}"
+
+    implementation(jarJar('org.antlr:antlr4-runtime:4.13.1'))
 }
 
