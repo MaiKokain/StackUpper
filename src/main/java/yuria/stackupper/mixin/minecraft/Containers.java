@@ -3,7 +3,6 @@ package yuria.stackupper.mixin.minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import yuria.stackupper.config.StackSize;
 
 @Mixin(value = net.minecraft.world.Containers.class, remap = false)
 public class Containers {

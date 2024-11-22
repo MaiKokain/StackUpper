@@ -7,7 +7,6 @@ import com.mojang.serialization.Codec;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import yuria.stackupper.Constants;
 import yuria.stackupper.StackUpper;
 import yuria.sul.ast.AssignOperation;
 import yuria.sul.ast.item.ItemProperty;
