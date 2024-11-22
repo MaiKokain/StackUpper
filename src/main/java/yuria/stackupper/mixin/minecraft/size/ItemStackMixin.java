@@ -26,7 +26,9 @@ public class ItemStackMixin {
 
         if (itemProperty.assignOperation == AssignOperation.EQUAL) return Math.max(itemProperty.doOpBy, 1);
 
-        return Math.max(itemProperty.assignOperation.apply(itemProperty.doOpBy, orig), 1);
+        long assignOperationResponse = itemProperty.assignOperation.apply(itemProperty.doOpBy, orig);
+
+        return (int) Math.min(Math.max(assignOperationResponse, 1), Integer.MAX_VALUE);
     }
 
     @WrapOperation(

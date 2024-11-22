@@ -5,45 +5,45 @@ import java.util.Locale;
 public enum AssignOperation {
     ADD {
         @Override
-        public Integer apply(Integer x, Integer y) {
+        public long apply(int x, int y) {
             return x + y;
         }
     },
     SUB {
         @Override
-        public Integer apply(Integer x, Integer y) {
+        public long apply(int x, int y) {
             if (y > x) return y - x;
             return x - y;
         }
     },
     MULTI {
         @Override
-        public Integer apply(Integer x, Integer y) {
+        public long apply(int x, int y) {
             return x * y;
         }
     },
     DIV {
         @Override
-        public Integer apply(Integer x, Integer y) {
+        public long apply(int x, int y) {
             if (y == 0 || x == 0) throw new ArithmeticException("Cannot divide by zero");
             return x / y;
         }
     },
     EQUAL {
         @Override
-        public Integer apply(Integer x, Integer y) {
+        public long apply(int x, int y) {
             return x;
         }
     },
     POW {
         @Override
-        public Integer apply(Integer x, Integer y) {
-            return (int) Math.pow(x, y);
+        public long apply(int x, int y) {
+            return (long) Math.pow(y, x);
         }
     };
 
-    public Integer apply(Integer x, Integer y) { return this.apply(x); };
-    public Integer apply(Integer x) { return x; }
+    public long apply(int x, int y) { return this.apply(x); };
+    public long apply(int x) { return x; }
 
     public static AssignOperation from(String text)
     {
