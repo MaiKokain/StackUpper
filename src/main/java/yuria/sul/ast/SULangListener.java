@@ -2,12 +2,9 @@ package yuria.sul.ast;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import yuria.stackupper.Constants;
 import yuria.stackupper.StackUpper;
-import yuria.stackupper.StackUpperCommand;
 import yuria.sul.StackUpperBaseListener;
 import yuria.sul.StackUpperParser;
 import yuria.sul.ast.item.ItemHandler;
@@ -51,7 +48,7 @@ public class SULangListener extends StackUpperBaseListener {
 
         StackUpper.itemCollection.put(
                 new ItemProperty(
-                        BuiltInRegistries.ITEM.get(ResourceLocation.parse(cleanKeyId)).get().value(),
+                        BuiltInRegistries.ITEM.get(ResourceLocation.parse(cleanKeyId)).asItem(),
                         assignOperation,
                         opNumber
                 )

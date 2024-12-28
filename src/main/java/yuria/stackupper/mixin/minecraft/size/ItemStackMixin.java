@@ -30,9 +30,9 @@ public class ItemStackMixin {
             return StackUpperConfig.CONFIG.maxStackGlobally.get();
         }
 
-        if (itemProperty.assignOperation == AssignOperation.EQUAL) return Math.max(itemProperty.doOpBy, 1);
+        if (itemProperty.assignOperation == AssignOperation.EQUAL) return (int) Math.max(itemProperty.doOpBy, 1);
 
-        long assignOperationResponse = itemProperty.assignOperation.apply(itemProperty.doOpBy, orig);
+        long assignOperationResponse = itemProperty.assignOperation.apply(itemProperty.doOpBy, (long) orig);
 
         return (int) Math.min(Math.max(assignOperationResponse, 1), Integer.MAX_VALUE);
     }

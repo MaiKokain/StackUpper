@@ -2,9 +2,8 @@ plugins {
     id 'java-library'
     id 'eclipse'
     id 'idea'
-//    id 'net.neoforged.gradle.userdev' version '7.0.170'
+    id 'net.neoforged.gradle.userdev' version '7.0.170'
     id 'net.neoforged.gradle.common' version '7.0.170'
-    id 'net.neoforged.moddev' version '1.0.21'
     id 'antlr'
 }
 
@@ -36,20 +35,9 @@ sourceSets {
     generated
 }
 
-neoForge {
-    version = project.neo_version
-
-    parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
-    }
-
-    runs {
-        client {
-            client()
-
-            systemProperty 'stackupper.debug', 'true'
-        }
+runs {
+    configureEach {run ->
+        run.systemProperties 'stackupper.debug': 'true'
     }
 }
 
@@ -92,6 +80,6 @@ build {
     test.setEnabled(false)
 }
 
-test {
+tasks.named("test", Test) {
     useJUnitPlatform()
 }
