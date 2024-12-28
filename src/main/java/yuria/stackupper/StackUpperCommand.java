@@ -59,7 +59,10 @@ public class StackUpperCommand {
         command.then(Commands.literal("reload")
                 .requires(s -> s.hasPermission(1))
                 .executes(ctx -> {
-                    if (!StackUpperConfig.CONFIG.enableScripting.get()) Minecraft.getInstance().player.displayClientMessage(Component.literal("Scripting is disabled."), false);
+                    if (!StackUpperConfig.CONFIG.enableScripting.get() && Minecraft.getInstance().player != null) {
+                        Minecraft.getInstance().player.displayClientMessage(Component.literal("Scripting is disabled."), false);
+                        return 1;
+                    }
                     if (!StackUpper.itemCollection.cache.isEmpty()) StackUpper.itemCollection.clear();
                     StackUpper.astProccessor.processFileToArray(StackUpper.StackUpperLangFolder);
                     StackUpper.astProccessor.start();
