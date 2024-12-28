@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import yuria.stackupper.StackUpper;
+import yuria.stackupper.StackUpperConfig;
 import yuria.sul.ast.AssignOperation;
 import yuria.sul.ast.item.ItemProperty;
 
@@ -22,13 +23,18 @@ public class ItemStackMixin {
         ItemStack itemStack = (ItemStack) (Object)this;
         ItemProperty itemProperty = StackUpper.itemCollection.get(itemStack.getItem());
 
-        if (itemProperty == null) return orig;
+        if (itemProperty == null) {
+            if (orig == 1) {
+                return orig;
+            }
+            return StackUpperConfig.CONFIG.maxStackGlobally.get();
+        }
 
         if (itemProperty.assignOperation == AssignOperation.EQUAL) return (int) Math.max(itemProperty.doOpBy, 1);
 
-        long toSet = itemProperty.assignOperation.apply(itemProperty.doOpBy, (long) orig).longValue();
+        long assignOperationResponse = itemProperty.assignOperation.apply(itemProperty.doOpBy, (long) orig);
 
-        return (int) Math.min(Math.max(toSet, 1), Integer.MAX_VALUE);
+        return (int) Math.min(Math.max(assignOperationResponse, 1), Integer.MAX_VALUE);
     }
 
     @WrapOperation(
