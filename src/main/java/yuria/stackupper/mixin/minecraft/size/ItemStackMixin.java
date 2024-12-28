@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import yuria.stackupper.StackUpper;
+import yuria.stackupper.StackUpperConfig;
 import yuria.sul.ast.AssignOperation;
 import yuria.sul.ast.item.ItemProperty;
 
@@ -22,7 +23,12 @@ public class ItemStackMixin {
         ItemStack itemStack = (ItemStack) (Object)this;
         ItemProperty itemProperty = StackUpper.itemCollection.get(itemStack.getItem());
 
-        if (itemProperty == null) return orig;
+        if (itemProperty == null) {
+            if (orig == 1) {
+                return orig;
+            }
+            return StackUpperConfig.CONFIG.maxStackGlobally.get();
+        }
 
         if (itemProperty.assignOperation == AssignOperation.EQUAL) return Math.max(itemProperty.doOpBy, 1);
 
@@ -37,6 +43,7 @@ public class ItemStackMixin {
     )
     private static Codec<Integer> idekLOL(int pMin, int pMax, Operation<Codec<Integer>> original)
     {
+        StackUpper.LOGGER.info("Codec Invoke @ item max, val: {} {}", pMin, pMax);
         return original.call(pMin, Integer.MAX_VALUE);
     }
 }
