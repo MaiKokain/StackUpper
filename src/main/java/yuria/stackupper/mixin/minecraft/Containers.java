@@ -8,6 +8,8 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 public class Containers {
     @ModifyConstant(method = "dropItemStack", constant = {@Constant(intValue = 21), @Constant(intValue = 10)})
     private static int dropItemStack(int value) {
-        return Integer.MAX_VALUE;
+        if (value == 1)
+            return 1;
+        return Math.max(value, value * Integer.MAX_VALUE / 64);
     }
 }
