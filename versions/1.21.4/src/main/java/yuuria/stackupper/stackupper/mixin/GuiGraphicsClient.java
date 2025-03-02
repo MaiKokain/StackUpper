@@ -8,21 +8,16 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import yuuria.stackupper.stackupper.Constants;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.DecimalFormat;
+
 @Mixin(value = GuiGraphics.class, remap = false)
 public abstract class GuiGraphicsClient {
-    @Shadow public abstract int drawString(Font font, @Nullable String text, int x, int y, int color);
-    @Shadow public abstract int drawString(Font font, @Nullable String text, int x, int y, int color, boolean dropShadow);
-
-
     private static final DecimalFormat BILLION_FORMAT  = new DecimalFormat("#.##B");
     private static final DecimalFormat MILLION_FORMAT  = new DecimalFormat("#.##M");
     private static final DecimalFormat THOUSAND_FORMAT = new DecimalFormat("#.##K");
