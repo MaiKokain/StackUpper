@@ -44,8 +44,12 @@ public abstract class ItemStackMixin {
         return (int) Math.min(Math.max(returnedStackSize, 1), Integer.MAX_VALUE);
     }
 
+
     @WrapOperation(
-            method = "lambda$static$3",
+            //? if = 1.21 {
+             method = "lambda$static$3",
+            //?} else
+            /*method = "lambda$static$1",*/
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/util/ExtraCodecs;intRange(II)Lcom/mojang/serialization/Codec;"

@@ -35,6 +35,10 @@ neoForge {
 dependencies {
     var coremodProject = stonecutter.node.sibling("coremods")
 
+    if (stonecutter.eval(stonecutter.current.version, "=1.21.4")) {
+        jarJar('org.antlr:antlr4-runtime:4.13.2')
+    }
+
     implementation(jarJar(project(coremodProject.getPath())))
     implementation(jarJar(group: 'yuuria.stackupper', name: "StackUpperConfigLibrary", version: '[1,)'))
 }
