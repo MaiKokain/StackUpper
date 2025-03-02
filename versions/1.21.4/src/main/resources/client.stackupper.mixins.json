@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "yuuria.stackupper.stackupper.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "stackupper.refmap.json",
+  "client": [
+    "GuiGraphicsClient"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
