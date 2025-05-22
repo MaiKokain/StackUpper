@@ -15,4 +15,9 @@ public class Utils {
     {
         Utils.globalMaxStackSizeProducer = newGlobalMaxStackSizeProducer;
     }
+
+    public static int getGlobalMaxStackSizeProducer()
+    {
+        return globalMaxStackSizeProducer.get();
+    }
 }
