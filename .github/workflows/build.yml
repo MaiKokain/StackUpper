@@ -21,8 +21,9 @@ jobs:
       - name: Build and publish config library
         working-directory: 'StackUpperConfigLib'
         run: ./gradlew buildAndPublishToMavenLocal
+      - name: Delete StackUpperConfigLib folder
+        run: rm -rf StackUpperConfigLib
       - name: Build StackUpper
-        working-directory: 'StackUpper'
         run: ./gradlew chiseledBuild
       - name: Upload build folder (lazy ass)
         uses: actions/upload-artifact@v4
