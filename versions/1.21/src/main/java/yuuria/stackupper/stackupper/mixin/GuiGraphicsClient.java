@@ -80,30 +80,32 @@ public abstract class GuiGraphicsClient {
             )
     )
     private void renderText(Font font, ItemStack stack, int x, int y, String text, CallbackInfo ci) {
-        var poseStack = ((GuiGraphics) (Object) this).pose();
+        if (text != null || stack.getCount() != 1) {
+            var poseStack = ((GuiGraphics) (Object) this).pose();
 
-        String text_ = text == null ? getStringForBigStackCount(stack.getCount()) : text;
-        float scale = (float) calculateStringScale(font, text_);
-        float inverseScale = 1 / scale;
+            String text_ = text == null ? getStringForBigStackCount(stack.getCount()) : text;
+            float scale = (float) calculateStringScale(font, text_);
+            float inverseScale = 1 / scale;
 
-        poseStack.scale(scale, scale, 1);
+            poseStack.scale(scale, scale, 1);
 
-        poseStack.translate((x+16)*inverseScale - font.width(text_), (y+16)*inverseScale-font.lineHeight, 200);
+            poseStack.translate((x + 16) * inverseScale - font.width(text_), (y + 16) * inverseScale - font.lineHeight, 200);
 
-        MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        font.drawInBatch(
-                text_,
-                0,
-                0,
-                16777215,
-                true,
-                poseStack.last().pose(),
-                bufferSource,
-                Font.DisplayMode.NORMAL,
-                0,
-                15728880
-        );
+            MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+            font.drawInBatch(
+                    text_,
+                    0,
+                    0,
+                    16777215,
+                    true,
+                    poseStack.last().pose(),
+                    bufferSource,
+                    Font.DisplayMode.NORMAL,
+                    0,
+                    15728880
+            );
 
-        bufferSource.endBatch();
+            bufferSource.endBatch();
+        }
     }
 }
