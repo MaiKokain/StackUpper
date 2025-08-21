@@ -1,15 +1,17 @@
 package yuuria.stackupper.stackupper.mixin;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.item.ItemStack;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.item.ItemStack;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -21,6 +23,10 @@ import java.text.DecimalFormat;
 
 @Mixin(value = GuiGraphics.class, remap = false)
 public abstract class GuiGraphicsClient {
+    @Shadow @Deprecated protected abstract void flushIfUnmanaged();
+
+    @Shadow @Final private PoseStack pose;
+    @Shadow @Final private MultiBufferSource.BufferSource bufferSource;
     private static final DecimalFormat BILLION_FORMAT  = new DecimalFormat("#.##B");
     private static final DecimalFormat MILLION_FORMAT  = new DecimalFormat("#.##M");
     private static final DecimalFormat THOUSAND_FORMAT = new DecimalFormat("#.##K");
@@ -52,60 +58,49 @@ public abstract class GuiGraphicsClient {
 
     @WrapOperation(
             method = "renderItemDecorations(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V"
-            )
+            at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V")
     )
-    private void nullifyRenderItemDecorations(PoseStack instance, float x, float y, float z, Operation<Void> original) {}
+    private void PoseStackTranslate(PoseStack instance, float x, float y, float z, Operation<Void> original) {}
 
     @WrapOperation(
             method = "renderItemDecorations(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Ljava/lang/String;IIIZ)I"
-            )
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Ljava/lang/String;IIIZ)I")
     )
-    private int nullifyRenderItemDecorations2(GuiGraphics instance, Font font, String text, int x, int y, int color, boolean dropShadow, Operation<Integer> original)
+    private int NoDrawStr(GuiGraphics instance, Font font, String text, int x, int y, int color, boolean dropShadow, Operation<Integer> original)
     {
         return 0;
     }
-
 
     @Inject(
             method = "renderItemDecorations(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Ljava/lang/String;IIIZ)I"
+                    target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Ljava/lang/String;IIIZ)I", ordinal = 0
             )
     )
-    private void renderText(Font font, ItemStack stack, int x, int y, String text, CallbackInfo ci) {
-        if (text != null || stack.getCount() != 1) {
-            var poseStack = ((GuiGraphics) (Object) this).pose();
+    private void renderText(Font font, ItemStack stack, int x, int y, String text, CallbackInfo ci)
+    {
+        String text_ = text == null ? getStringForBigStackCount(stack.getCount()) : text;
+        float scale = (float) calculateStringScale(font, text_);
+        float i_scale = 1/scale;
+        this.pose.scale(scale, scale, 1);
 
-            String text_ = text == null ? getStringForBigStackCount(stack.getCount()) : text;
-            float scale = (float) calculateStringScale(font, text_);
-            float inverseScale = 1 / scale;
+        float custom_X = (x + 16) * i_scale - font.width(text_);
+        float custom_Y = (y + 16) * i_scale - font.lineHeight;
 
-            poseStack.scale(scale, scale, 1);
-
-            poseStack.translate((x + 16) * inverseScale - font.width(text_), (y + 16) * inverseScale - font.lineHeight, 200);
-
-            MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-            font.drawInBatch(
-                    text_,
-                    0,
-                    0,
-                    16777215,
-                    true,
-                    poseStack.last().pose(),
-                    bufferSource,
-                    Font.DisplayMode.NORMAL,
-                    0,
-                    15728880
-            );
-
-            bufferSource.endBatch();
-        }
+        this.pose.translate(0.0F, 0.0F, 200.0F);
+        font.drawInBatch(
+                text_,
+                custom_X,
+                custom_Y,
+                16777215,
+                true,
+                this.pose.last().pose(),
+                this.bufferSource,
+                Font.DisplayMode.NORMAL,
+                0,
+                15728880
+        );
+        this.flushIfUnmanaged();
     }
 }
