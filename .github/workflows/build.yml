@@ -4,9 +4,6 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        minecraft_versions: [1.21, 1.21.4]
     runs-on: ubuntu-latest
     name: Build StackUpper
     steps:
