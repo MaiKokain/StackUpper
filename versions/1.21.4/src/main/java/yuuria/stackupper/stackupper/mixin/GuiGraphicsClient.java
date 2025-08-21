@@ -68,13 +68,13 @@ public abstract class GuiGraphicsClient {
 
             poseStack.pushPose();
             poseStack.scale(scale, scale, 1);
-            poseStack.translate(drawX, drawY, 200.0F);
+            poseStack.translate(0, 0, 200.0F);
 
 
             font.drawInBatch(
                     text_,
-                    0,
-                    0,
+                    drawX,
+                    drawY,
                     16777215,
                     true,
                     poseStack.last().pose(),
