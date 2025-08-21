@@ -16,7 +16,10 @@ public class AnvilMenuMixin {
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/Container;setItem(ILnet/minecraft/world/item/ItemStack;)V",
+                    //? if = 1.21 {
                     ordinal = 3
+                    //?} else
+                    /*ordinal = 2*/
             )
     )
     void onTakeSetItem(Container instance, int i, ItemStack itemStack, Operation<Void> original)
