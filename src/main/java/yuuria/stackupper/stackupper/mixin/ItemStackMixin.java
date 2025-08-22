@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import yuuria.stackupper.configlibrary.Constant;
 import yuuria.stackupper.configlibrary.Property;
 import yuuria.stackupper.configlibrary.ast.AssignOperator;
+import yuuria.stackupper.stackupper.Constants;
 import yuuria.stackupper.stackupper.StackUpperConfig;
 
 @Mixin(value = ItemStack.class, remap = false)
@@ -24,6 +25,10 @@ public abstract class ItemStackMixin {
     )
     private int fixGetMaxStackSize(int orig)
     {
+        if (!StackUpperConfig.CONFIG_SPEC.isLoaded()) {
+            return orig;
+        }
+
         if (!StackUpperConfig.CONFIG.enableScripting.get()) {
             if (orig == 1) return orig;
 
