@@ -28,6 +28,9 @@ public class Constants {
     public static final int MAX_STACK_LIMIT = 64;
 
     public static final Supplier<Integer> globalStackLimitSupplier = () -> {
+        if (!StackUpperConfig.CONFIG_SPEC.isLoaded()) {
+            return MAX_STACK_LIMIT;
+        }
         int max = MAX_STACK_LIMIT == StackUpperConfig.CONFIG.maxStackGlobally.getAsInt() ? MAX_STACK_LIMIT : StackUpperConfig.CONFIG.maxStackGlobally.getAsInt();
         if (Constant.ItemCollection.isEmpty()) return max;
 
