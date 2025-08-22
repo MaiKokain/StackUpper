@@ -9,7 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import yuuria.stackupper.configlibrary.ConfigLibrary;
 import yuuria.stackupper.configlibrary.Constant;
 
-@EventBusSubscriber(modid = "stackupper", bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = "stackupper")
 public class StackUpperConfig {
     public static final StackUpperConfig CONFIG;
     public static final ModConfigSpec CONFIG_SPEC;

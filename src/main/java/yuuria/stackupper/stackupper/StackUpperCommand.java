@@ -9,7 +9,7 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import yuuria.stackupper.stackupper.commands.DebugCommands;
 import yuuria.stackupper.stackupper.commands.ReloadCommand;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = "stackupper")
+@EventBusSubscriber(modid = "stackupper")
 public class StackUpperCommand {
 
     @SubscribeEvent

@@ -12,8 +12,6 @@ import yuuria.stackupper.coremod.Utils;
 import yuuria.stackupper.stackupper.events.Client;
 import yuuria.stackupper.stackupper.events.ServerStartEvent;
 
-import java.util.Map;
-
 @Mod("stackupper")
 public class StackUpper {
     static {
