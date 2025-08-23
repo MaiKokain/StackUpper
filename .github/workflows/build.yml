@@ -25,8 +25,10 @@ jobs:
         run: rm -rf StackUpperConfigLib
       - name: Build StackUpper
         run: ./gradlew chiseledBuild
+      - name: Move built files into a folder
+        run: bash scripts/move_file.sh
       - name: Upload build folder (lazy ass)
         uses: actions/upload-artifact@v4
         with:
           name: 'build'
-          path: versions
+          path: output_files

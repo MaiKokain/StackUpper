@@ -9,8 +9,11 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
-
-base.archivesName = "$mod_id-$mod_version-$minecraft_version"
+if (project.hasProperty('mod_version')) {
+    base.archivesName = "$mod_id-$mod_version-$minecraft_version"
+} else {
+    base.archivesName = "$mod_id-$minecraft_version-debug"
+}
 
 repositories {
     mavenLocal()
@@ -35,7 +38,7 @@ neoForge {
 dependencies {
     var coremodProject = stonecutter.node.sibling("coremods")
 
-    if (stonecutter.eval(stonecutter.current.version, "=1.21.4")) {
+    if (stonecutter.eval(stonecutter.current.version, ">=1.21.4")) {
         jarJar('org.antlr:antlr4-runtime:4.13.2')
     }
 
@@ -54,10 +57,13 @@ tasks.withType(ProcessResources).configureEach {
             mod_id                 : mod_id,
             mod_name               : mod_name,
             mod_license            : mod_license,
-            mod_version            : mod_version,
+            mod_version            : "debug",
             mod_authors            : mod_authors,
             mod_description        : mod_description
     ]
+    if (project.hasProperty("mod_version")) {
+        replaceProperties.put("mod_version", "$mod_version")
+    }
     inputs.properties replaceProperties
 
     filesMatching(['META-INF/neoforge.mods.toml']) {
