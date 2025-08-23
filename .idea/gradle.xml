@@ -12,8 +12,10 @@
             <option value="$PROJECT_DIR$/coremods" />
             <option value="$PROJECT_DIR$/coremods/versions/1.21" />
             <option value="$PROJECT_DIR$/coremods/versions/1.21.4" />
+            <option value="$PROJECT_DIR$/coremods/versions/1.21.6" />
             <option value="$PROJECT_DIR$/versions/1.21" />
             <option value="$PROJECT_DIR$/versions/1.21.4" />
+            <option value="$PROJECT_DIR$/versions/1.21.6" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="true" />

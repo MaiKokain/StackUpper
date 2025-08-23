@@ -22,9 +22,6 @@ public class StackUpper {
 
     public StackUpper(IEventBus modEventBus, ModContainer modContainer)
     {
-        if (FMLEnvironment.dist.isClient()) {
-            NeoForge.EVENT_BUS.register(Client.class);
-        }
         NeoForge.EVENT_BUS.register(ServerStartEvent.class);
         modContainer.registerConfig(ModConfig.Type.COMMON, StackUpperConfig.CONFIG_SPEC);
         modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
