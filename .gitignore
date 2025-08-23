@@ -42,3 +42,5 @@ bin/
 .DS_Store
 
 **/runs
+
+output_files
