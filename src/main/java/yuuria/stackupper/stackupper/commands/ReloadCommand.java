@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import yuuria.stackupper.configlibrary.ConfigLibrary;
 import yuuria.stackupper.configlibrary.Constant;
 import yuuria.stackupper.stackupper.Constants;
+import yuuria.stackupper.stackupper.StackSupplier;
 import yuuria.stackupper.stackupper.StackUpperConfig;
 
 public class ReloadCommand {
@@ -45,6 +46,7 @@ public class ReloadCommand {
 
         if (!Constant.ItemCollection.isEmpty()) Constant.ItemCollection.clear();
         ConfigLibrary.Start();
+        StackSupplier.updateMaxStack();
         return Command.SINGLE_SUCCESS;
     }
 }

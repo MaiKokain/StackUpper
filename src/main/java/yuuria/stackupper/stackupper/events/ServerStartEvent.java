@@ -8,6 +8,7 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 import yuuria.stackupper.configlibrary.ConfigLibrary;
 import yuuria.stackupper.stackupper.Constants;
+import yuuria.stackupper.stackupper.StackSupplier;
 import yuuria.stackupper.stackupper.StackUpper;
 import yuuria.stackupper.stackupper.StackUpperConfig;
 
@@ -21,5 +22,6 @@ public class ServerStartEvent {
             ConfigLibrary.addFile(Constants.StackUpperConfigRuleset, true);
             ConfigLibrary.Start();
         }
+        StackSupplier.updateMaxStack();
     }
 }

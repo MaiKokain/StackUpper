@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import yuuria.stackupper.configlibrary.Constant;
 import yuuria.stackupper.configlibrary.Property;
 import yuuria.stackupper.configlibrary.ast.AssignOperator;
-import yuuria.stackupper.stackupper.Constants;
 import yuuria.stackupper.stackupper.StackUpperConfig;
 
 @Mixin(value = ItemStack.class, remap = false)

@@ -49,6 +49,7 @@ public class StackUpperConfig {
                 Constant.FilesArray.clear();
                 Constant.ItemCollection.clear();
             }
+            StackSupplier.updateMaxStack();
         }
     }
 }

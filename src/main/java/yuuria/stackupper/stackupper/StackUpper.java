@@ -4,18 +4,16 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import yuuria.stackupper.coremod.Utils;
-import yuuria.stackupper.stackupper.events.Client;
 import yuuria.stackupper.stackupper.events.ServerStartEvent;
 
 @Mod("stackupper")
 public class StackUpper {
     static {
-        Utils.setGlobalMaxStackSizeProducer(Constants.globalStackLimitSupplier);
+        Utils.setGlobalMaxStackSizeProducer(StackSupplier.globalStackLimitSupplier);
         // Loads special function for different version
         new SpecialSetter();
     }

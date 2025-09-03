@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import yuuria.stackupper.stackupper.Constants;
+import yuuria.stackupper.stackupper.StackSupplier;
 
 @Mixin(value = ItemStackHandler.class, remap = false)
 public class ItemStackHandlerMixin {
@@ -14,6 +14,6 @@ public class ItemStackHandlerMixin {
     )
     private int fixGetSlotLimit(int original)
     {
-        return Constants.globalStackLimitSupplier.get();
+        return StackSupplier.getMaxStack();
     }
 }

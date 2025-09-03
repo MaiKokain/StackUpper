@@ -4,7 +4,7 @@ import net.minecraft.world.Containers;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import yuuria.stackupper.stackupper.Constants;
+import yuuria.stackupper.stackupper.StackSupplier;
 
 @Mixin(value = Containers.class, remap = false)
 public class ContainersMixin {
@@ -16,7 +16,7 @@ public class ContainersMixin {
     {
         if (value == 1) return 1;
 
-        int newStackSize = Constants.globalStackLimitSupplier.get();
+        int newStackSize = StackSupplier.getMaxStack();
         if (newStackSize < 64) return 64;
 
         return Math.max(value, value * newStackSize / 64);

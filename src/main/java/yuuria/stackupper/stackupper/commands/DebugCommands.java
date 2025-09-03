@@ -9,6 +9,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import yuuria.stackupper.configlibrary.Constant;
 import yuuria.stackupper.stackupper.Constants;
+import yuuria.stackupper.stackupper.StackSupplier;
 
 public class DebugCommands {
     public static void register(LiteralArgumentBuilder<CommandSourceStack> ctx)
@@ -22,9 +23,9 @@ public class DebugCommands {
     private static int highest_stack_size(CommandContext<CommandSourceStack> ctx)
     {
         if (Minecraft.getInstance().player != null) {
-            Minecraft.getInstance().player.displayClientMessage(Component.literal(Constants.globalStackLimitSupplier.get().toString()), false);
+            Minecraft.getInstance().player.displayClientMessage(Component.literal(String.valueOf(StackSupplier.getMaxStack())), false);
         }
-        Constants.logger.info(Constants.globalStackLimitSupplier.get().toString());
+        Constants.logger.info(String.valueOf(StackSupplier.getMaxStack()));
         return Command.SINGLE_SUCCESS;
     }
 
