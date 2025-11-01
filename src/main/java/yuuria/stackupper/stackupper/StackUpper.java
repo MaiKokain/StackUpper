@@ -22,7 +22,6 @@ public class StackUpper {
     {
         NeoForge.EVENT_BUS.register(ServerStartEvent.class);
         modContainer.registerConfig(ModConfig.Type.COMMON, StackUpperConfig.CONFIG_SPEC);
-        modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 
     public static void checkAndCreateFolder()
