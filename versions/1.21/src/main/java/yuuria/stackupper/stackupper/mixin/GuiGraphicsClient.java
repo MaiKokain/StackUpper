@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -27,6 +28,10 @@ public abstract class GuiGraphicsClient {
 
     @Shadow @Final private PoseStack pose;
     @Shadow @Final private MultiBufferSource.BufferSource bufferSource;
+
+    @Shadow
+    public abstract int drawString(Font font, @Nullable String text, int x, int y, int color, boolean dropShadow);
+
     private static final DecimalFormat BILLION_FORMAT  = new DecimalFormat("#.##B");
     private static final DecimalFormat MILLION_FORMAT  = new DecimalFormat("#.##M");
     private static final DecimalFormat THOUSAND_FORMAT = new DecimalFormat("#.##K");
@@ -80,6 +85,7 @@ public abstract class GuiGraphicsClient {
     )
     private void renderText(Font font, ItemStack stack, int x, int y, String text, CallbackInfo ci)
     {
+//        ci.cancel();
         String text_ = text == null ? getStringForBigStackCount(stack.getCount()) : text;
         float scale = (float) calculateStringScale(font, text_);
         float i_scale = 1/scale;
@@ -88,11 +94,14 @@ public abstract class GuiGraphicsClient {
         float custom_X = (x + 16) * i_scale - font.width(text_);
         float custom_Y = (y + 16) * i_scale - font.lineHeight;
 
+        float mc_custom_X = (x + 19) * i_scale - font.width(text_) - 2;
+        float mc_custom_Y = (y + 18) * i_scale - font.lineHeight;
+
         this.pose.translate(0.0F, 0.0F, 200.0F);
         font.drawInBatch(
                 text_,
-                custom_X,
-                custom_Y,
+                mc_custom_X,
+                mc_custom_Y,
                 16777215,
                 true,
                 this.pose.last().pose(),
