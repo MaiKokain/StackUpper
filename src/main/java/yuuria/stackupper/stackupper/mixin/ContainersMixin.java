@@ -15,7 +15,6 @@ public class ContainersMixin {
     private static int dropItemStackMixin(int value)
     {
         if (value == 1) return 1;
-
         int newStackSize = StackSupplier.getMaxStack();
         if (newStackSize < 64) return 64;
 

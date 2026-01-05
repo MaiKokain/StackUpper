@@ -7,9 +7,12 @@ public class Utils {
 
     public static int increaseStackSize(int original)
     {
-//        if (original == 99) return globalMaxStackSizeProducer.get() * (original / 99);
-        if (original == 99) return Integer.MAX_VALUE;
+        if (original == 99 || original == 64) return getGlobalMaxStackSizeProducer();
         return original;
+    }
+
+    public static int return32I() {
+        return Integer.MAX_VALUE;
     }
 
     public static void setGlobalMaxStackSizeProducer(Supplier<Integer> newGlobalMaxStackSizeProducer)

@@ -25,7 +25,9 @@ public class SlotLimit implements ITransformer<MethodNode> {
     public Set<Target<MethodNode>> targets() {
         return Set.of(
                 Target.targetMethod("net.minecraft.world.Container", "getMaxStackSize", "()I"),
-                Target.targetMethod("net.neoforged.neoforge.items.IItemHandler", "getSlotLimit", "(I)I")
+                Target.targetMethod("net.neoforged.neoforge.items.IItemHandler", "getSlotLimit", "(I)I"),
+                Target.targetMethod("net.neoforged.neoforge.transfer.ItemAccessResourceHandler", "getCapacity", "()I"),
+                Target.targetMethod("mekanism.common.inventory.slot.BasicInventorySlot", "getLimit", "(Lnet/minecraft/world/item/ItemStack;)I")
         );
     }
 
