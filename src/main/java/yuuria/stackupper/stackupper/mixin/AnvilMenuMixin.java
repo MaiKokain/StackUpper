@@ -18,7 +18,7 @@ public class AnvilMenuMixin {
                     //? if = 1.21 {
                     ordinal = 3
                     //?} else
-                    /*ordinal = 2*/
+                    //ordinal = 2
             )
     )
     void onTakeSetItem(Container instance, int i, ItemStack itemStack, Operation<Void> original)

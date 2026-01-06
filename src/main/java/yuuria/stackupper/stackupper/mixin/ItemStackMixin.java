@@ -53,7 +53,7 @@ public abstract class ItemStackMixin {
             //? if = 1.21 {
              method = "lambda$static$3",
             //?} else
-            /*method = "lambda$static$1",*/
+            //method = "lambda$static$1",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/util/ExtraCodecs;intRange(II)Lcom/mojang/serialization/Codec;"
