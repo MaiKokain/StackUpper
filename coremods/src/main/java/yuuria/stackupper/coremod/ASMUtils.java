@@ -2,13 +2,17 @@ package yuuria.stackupper.coremod;
 
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ASMUtils {
+    private static final Logger logger = LoggerFactory.getLogger(ASMUtils.class);
+
     public static MethodNode fixSlotLimit(MethodNode methodNode)
     {
         for (AbstractInsnNode abstractInsnNode : methodNode.instructions) {
             if (abstractInsnNode.getOpcode() == Opcodes.IRETURN) {
-//                if (methodNode.)
+                logger.info("replacing {}", methodNode.name);
                 methodNode.instructions.insertBefore(
                         abstractInsnNode,
                         new MethodInsnNode(
@@ -49,7 +53,7 @@ public class ASMUtils {
         {
             if (insnNode.getOpcode() == Opcodes.BIPUSH && ((IntInsnNode) insnNode).operand == 64)
             {
-                SUCoreMod.logger.info("replacing bipush 64");
+                logger.info("replacing bipush 64");
                 methodNode.instructions.insertBefore(
                         insnNode,
                         new MethodInsnNode(
@@ -79,7 +83,7 @@ public class ASMUtils {
 
             while (insnNode != null) {
                 if (insnNode.getOpcode() == Opcodes.BIPUSH && (((IntInsnNode) insnNode).operand == 64 || ((IntInsnNode) insnNode).operand == 99)) {
-                    SUCoreMod.logger.info("replacing bipush 64 from class");
+                    logger.info("replacing bipush 64 from class");
                     methodNode.instructions.insertBefore(
                             insnNode,
                             new LdcInsnNode(Integer.MAX_VALUE)

@@ -14,8 +14,9 @@ repositories {
 }
 
 dependencies {
+//    compileOnly(platform("net.neoforged:minecraft-dependencies:${project.minecraft_version}"))
     compileOnly "org.jetbrains:annotations:24.0.1"
-    compileOnly "net.neoforged.fancymodloader:loader:7.0.4-alpha"
+    compileOnly "net.neoforged.fancymodloader:loader:${project.nf_fml_version}"
 }
 
 java {
@@ -27,6 +28,7 @@ java {
 jar {
     manifest {
         attributes(
+                "Automatic-Module-Name": "stackupper.coremods",
                 'FMLModType': 'LIBRARY',
                 'Specification-Title': "stackupper-coremod",
                 'Specification-Vendor': "Yuuria",
