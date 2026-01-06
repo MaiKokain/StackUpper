@@ -1,0 +1,42 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+}
+
+repositories {
+    mavenLocal()
+    maven { url = 'https://maven.neoforged.net/releases' }
+    maven {
+        name 'Mojang'
+        url 'https://libraries.minecraft.net'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly "org.jetbrains:annotations:24.0.1"
+
+    compileOnly "net.neoforged.fancymodloader:loader:8.0.0"
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                "Automatic-Module-Name": "stackupper.coremods",
+                'FMLModType': 'LIBRARY',
+                'Specification-Title': "stackupper-coremod",
+                'Specification-Vendor': "Yuuria",
+                'Specification-Version': "1",
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.jar.archiveVersion,
+                'Implementation-Vendor': "Yuuria",
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        )
+    }
+}
