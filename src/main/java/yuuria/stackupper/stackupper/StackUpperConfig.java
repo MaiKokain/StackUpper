@@ -38,6 +38,22 @@ public class StackUpperConfig {
     }
 
     @SubscribeEvent
+    static void Loading(ModConfigEvent.Loading event)
+    {
+        if (event.getConfig().getModId().equals("stackupper") && event.getConfig().getType() == ModConfig.Type.COMMON) {
+            if (CONFIG.enableScripting.get()) {
+                if (Constant.FilesArray.isEmpty()) ConfigLibrary.addFile(Constants.StackUpperConfigRuleset, true);
+                if (!Constant.ItemCollection.isEmpty()) Constant.ItemCollection.clear();
+                ConfigLibrary.Start();
+            } else if (!CONFIG.enableScripting.get() && !Constant.ItemCollection.isEmpty()) {
+                Constant.FilesArray.clear();
+                Constant.ItemCollection.clear();
+            }
+            StackSupplier.updateMaxStack();
+        }
+    }
+
+    @SubscribeEvent
     static void Reloading(ModConfigEvent.Reloading event)
     {
         if (event.getConfig().getModId().equals("stackupper") && event.getConfig().getType() == ModConfig.Type.COMMON) {
