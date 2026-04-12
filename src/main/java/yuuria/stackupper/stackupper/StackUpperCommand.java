@@ -27,6 +27,4 @@ public class StackUpperCommand {
         GenerateDataIndexCommand.register(command);
         event.getDispatcher().register(command);
     }
-
-
 }

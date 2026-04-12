@@ -1,6 +1,5 @@
 package yuuria.stackupper.stackupper.network;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -8,6 +7,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import yuuria.stackupper.stackupper.Constants;
+import yuuria.stackupper.stackupper.StackSupplier;
 
 @EventBusSubscriber(modid = "stackupper")
 public class NetworkHandler {
@@ -31,6 +31,7 @@ public class NetworkHandler {
                     Constants.SyncedServerSizes.put(item, size);
                 });
             });
+            StackSupplier.updateMaxStack();
         });
     }
 }

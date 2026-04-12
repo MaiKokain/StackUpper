@@ -6,10 +6,12 @@
   "refmap": "stackupper.refmap.json",
   "mixins": [
     "AnvilMenuMixin",
+    "ContainerMixin",
     "ContainersMixin",
     "ItemEntityMixin",
     "ItemStackHandlerMixin",
-    "ItemStackMixin"
+    "ItemStackMixin",
+    "SlotMixin"
   ],
   "injectors": {
     "defaultRequire": 1
