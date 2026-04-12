@@ -1,14 +1,18 @@
 package yuuria.stackupper.coremod;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.function.Supplier;
 
 public class Utils {
+    private static Logger logger = LoggerFactory.getLogger("StackUpperCoreMod");
     private static Supplier<Integer> globalMaxStackSizeProducer;
 
     public static int increaseStackSize(int original)
     {
-        if (original == 99 || original == 64) return getGlobalMaxStackSizeProducer();
-        return original;
+//        if (original == 99 || original == 64) return getGlobalMaxStackSizeProducer();
+        return getGlobalMaxStackSizeProducer();
     }
 
     public static int return32I() {
