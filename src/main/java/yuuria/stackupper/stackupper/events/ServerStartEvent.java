@@ -19,7 +19,7 @@ public class ServerStartEvent {
         StackUpper.checkAndCreateFolder();
         if (StackUpperConfig.CONFIG.enableScripting.get()) {
             ConfigLibrary.addFile(Constants.StackUpperConfigRuleset, true);
-            ConfigLibrary.Start();
+            ConfigLibrary.Start(StackSupplier::updateMaxStack);
         }
         StackSupplier.updateMaxStack();
     }

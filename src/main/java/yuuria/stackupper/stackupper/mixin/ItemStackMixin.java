@@ -9,6 +9,9 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import yuuria.stackupper.configlibrary.Constant;
+import yuuria.stackupper.configlibrary.Property;
+import yuuria.stackupper.configlibrary.ast.AssignOperator;
 import yuuria.stackupper.stackupper.Constants;
 import yuuria.stackupper.stackupper.StackUpperConfig;
 
@@ -35,6 +38,17 @@ public abstract class ItemStackMixin {
 
         if (!Constants.SyncedServerSizes.isEmpty() && Constants.SyncedServerSizes.containsKey(item)) {
             return Constants.SyncedServerSizes.get(item);
+        }  else if (!Constant.ItemCollection.isEmpty() && Constant.ItemCollection.containsKey(this.getItem())) {
+            Property property = Constant.ItemCollection.get(this.getItem());
+            if (property == null) return orig;
+
+            long returnStackedSize;
+            if (property.assignOperator != AssignOperator.EQUAL) {
+                returnStackedSize = property.assignOperator.apply(property.assignedBy, property.origStackSize);
+            } else {
+                returnStackedSize = property.assignOperator.apply(property.assignedBy);
+            }
+            return (int) Math.min(Math.max(returnStackedSize,1), Integer.MAX_VALUE);
         }
 
         return orig;
