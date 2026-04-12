@@ -17,7 +17,15 @@ public class DebugCommands {
         ctx.then(Commands.literal("print_item_collection").executes(DebugCommands::print_item_collection));
         ctx.then(Commands.literal("print_files_array").executes(DebugCommands::print_files_array));
         ctx.then(Commands.literal("print_highest_stack").executes(DebugCommands::highest_stack_size));
+        ctx.then(Commands.literal("print_sync_stack_size").executes(DebugCommands::print_sync_stack_size));
+    }
 
+    private static int print_sync_stack_size(CommandContext<CommandSourceStack> ctx)
+    {
+        Constants.SyncedServerSizes.forEach((s, v) -> {
+            Constants.logger.info("{} = {}", s, v);
+        });
+        return Command.SINGLE_SUCCESS;
     }
 
     private static int highest_stack_size(CommandContext<CommandSourceStack> ctx)

@@ -12,7 +12,7 @@ java {
 if (project.hasProperty('mod_version')) {
     base.archivesName = "$mod_id-$mod_version-$minecraft_version"
 } else {
-    base.archivesName = "$mod_id-$minecraft_version-debug"
+    base.archivesName = "$mod_id-debug-$minecraft_version"
 }
 
 repositories {

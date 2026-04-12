@@ -7,6 +7,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import yuuria.stackupper.stackupper.commands.DebugCommands;
+import yuuria.stackupper.stackupper.commands.GenerateDataIndexCommand;
 import yuuria.stackupper.stackupper.commands.ReloadCommand;
 
 @EventBusSubscriber(modid = "stackupper")
@@ -23,6 +24,7 @@ public class StackUpperCommand {
             DebugCommands.register(command);
         }
         ReloadCommand.register(command);
+        GenerateDataIndexCommand.register(command);
         event.getDispatcher().register(command);
     }
 

@@ -18,7 +18,7 @@ import yuuria.stackupper.stackupper.StackUpperConfig;
 public class ReloadCommand {
     public static void register(LiteralArgumentBuilder<CommandSourceStack> ctx)
     {
-        var builder = Commands.literal("reload").requires(c -> c.hasPermission(1));
+        var builder = Commands.literal("reload").requires(c -> c.hasPermission(4));
 
         builder.then(
                 Commands.argument("reparse_file", BoolArgumentType.bool())
@@ -33,7 +33,7 @@ public class ReloadCommand {
             if (Minecraft.getInstance().player != null) {
                 Minecraft.getInstance().player.displayClientMessage(Component.literal("Scripting is disabled").withStyle(ChatFormatting.RED), false);
             } else {
-                Constants.logger.error("Scripting is disabled ");
+                Constants.logger.error("Scripting is disabled");
             }
             return Command.SINGLE_SUCCESS;
         }

@@ -1,6 +1,5 @@
 package yuuria.stackupper.stackupper.events;
 
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -12,7 +11,7 @@ import yuuria.stackupper.stackupper.StackSupplier;
 import yuuria.stackupper.stackupper.StackUpper;
 import yuuria.stackupper.stackupper.StackUpperConfig;
 
-@EventBusSubscriber(value = Dist.DEDICATED_SERVER, modid = "stackupper")
+@EventBusSubscriber(modid = "stackupper")
 public class ServerStartEvent {
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public static void onServerStart(ServerStartingEvent event)
