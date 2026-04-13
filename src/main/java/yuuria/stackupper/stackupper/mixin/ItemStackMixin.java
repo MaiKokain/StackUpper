@@ -29,9 +29,9 @@ public abstract class ItemStackMixin {
             return orig;
         }
 
-        if (!StackUpperConfig.CONFIG.enableScripting.get()) {
+        if (!StackUpperConfig.ServerConfigCache.CURRENT.enabled_scripting()) {
             if (orig == 1) return orig;
-            return StackUpperConfig.CONFIG.maxStackGlobally.get();
+            return StackUpperConfig.ServerConfigCache.CURRENT.global_max_stack();
         }
 
         Item item = this.getItem();

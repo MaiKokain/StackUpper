@@ -9,6 +9,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import yuuria.stackupper.configlibrary.Constant;
 import yuuria.stackupper.stackupper.Constants;
 import yuuria.stackupper.stackupper.StackSupplier;
+import yuuria.stackupper.stackupper.StackUpperConfig;
 import yuuria.stackupper.stackupper.network.SyncStackSizesPayload;
 
 @EventBusSubscriber(modid = "stackupper")
@@ -16,7 +17,7 @@ public class PlayerJoinEvent {
     @SubscribeEvent
     public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-            PacketDistributor.sendToPlayer(serverPlayer, new SyncStackSizesPayload(Constants.generateSyncHashMap()));
+            PacketDistributor.sendToPlayer(serverPlayer, new SyncStackSizesPayload(StackUpperConfig.CONFIG.enableScripting.get(), StackUpperConfig.CONFIG.maxStackGlobally.get(), Constants.generateSyncHashMap()));
         }
     }
 

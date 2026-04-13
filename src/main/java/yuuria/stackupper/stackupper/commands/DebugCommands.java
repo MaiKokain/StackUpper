@@ -10,6 +10,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import yuuria.stackupper.configlibrary.Constant;
 import yuuria.stackupper.stackupper.Constants;
 import yuuria.stackupper.stackupper.StackSupplier;
+import yuuria.stackupper.stackupper.StackUpperConfig;
 
 public class DebugCommands {
     public static void register(LiteralArgumentBuilder<CommandSourceStack> ctx)
@@ -19,6 +20,13 @@ public class DebugCommands {
         ctx.then(Commands.literal("print_highest_stack").executes(DebugCommands::highest_stack_size));
         ctx.then(Commands.literal("print_sync_stack_size").executes(DebugCommands::print_sync_stack_size));
         ctx.then(Commands.literal("call_update_stack_supplier").executes(DebugCommands::call_update_stack_supplier));
+        ctx.then(Commands.literal("print_server_synced_config").executes(DebugCommands::print_server_synced_config));
+    }
+
+    private static int print_server_synced_config(CommandContext<CommandSourceStack> ctx)
+    {
+        Constants.logger.info(StackUpperConfig.ServerConfigCache.CURRENT.toString());
+        return 1;
     }
 
     private static int call_update_stack_supplier(CommandContext<CommandSourceStack> ctx)

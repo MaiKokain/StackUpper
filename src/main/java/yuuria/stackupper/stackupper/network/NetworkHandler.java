@@ -8,6 +8,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import yuuria.stackupper.stackupper.Constants;
 import yuuria.stackupper.stackupper.StackSupplier;
+import yuuria.stackupper.stackupper.StackUpperConfig;
 
 @EventBusSubscriber(modid = "stackupper")
 public class NetworkHandler {
@@ -25,6 +26,11 @@ public class NetworkHandler {
 
     private static void handleSyncOnClient(final SyncStackSizesPayload payload, final IPayloadContext context) {
         context.enqueueWork(() -> {
+            StackUpperConfig.ServerConfigCache.CURRENT = new StackUpperConfig.ServerConfigCache(
+                    payload.enableScripting(),
+                    payload.maxStackGlobally()
+            );
+
             Constants.SyncedServerSizes.clear();
             payload.modifiedSizes().forEach((id, size) -> {
                 BuiltInRegistries.ITEM.getOptional(id).ifPresent(item -> {

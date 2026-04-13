@@ -42,11 +42,9 @@ public class ReloadCommand {
             return Command.SINGLE_SUCCESS;
         }
 
-        if (!Constant.ItemCollection.isEmpty()) Constant.ItemCollection.clear();
-        ConfigLibrary.Start();
-        StackSupplier.updateMaxStack();
 
-        PacketDistributor.sendToAllPlayers(new SyncStackSizesPayload(Constants.generateSyncHashMap()));
+//        PacketDistributor.sendToAllPlayers(new SyncStackSizesPayload( Constants.generateSyncHashMap()));
+        StackUpperConfig.syncAndBroadcastToClients();
 
         ctx.getSource().sendSystemMessage(Component.literal("Stack sizes reloaded and synced to all players.").withStyle(ChatFormatting.GREEN));
 

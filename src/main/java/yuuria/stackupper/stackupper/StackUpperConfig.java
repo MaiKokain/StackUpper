@@ -2,12 +2,14 @@ package yuuria.stackupper.stackupper;
 
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.apache.commons.lang3.tuple.Pair;
 import yuuria.stackupper.configlibrary.ConfigLibrary;
 import yuuria.stackupper.configlibrary.Constant;
+import yuuria.stackupper.stackupper.network.SyncStackSizesPayload;
 
 @EventBusSubscriber(modid = "stackupper")
 public class StackUpperConfig {
@@ -38,34 +40,48 @@ public class StackUpperConfig {
     }
 
     @SubscribeEvent
-    static void Loading(ModConfigEvent.Loading event)
-    {
-        if (event.getConfig().getModId().equals("stackupper") && event.getConfig().getType() == ModConfig.Type.COMMON) {
-            if (CONFIG.enableScripting.get()) {
-                if (Constant.FilesArray.isEmpty()) ConfigLibrary.addFile(Constants.StackUpperConfigRuleset, true);
-                if (!Constant.ItemCollection.isEmpty()) Constant.ItemCollection.clear();
-                ConfigLibrary.Start();
-            } else if (!CONFIG.enableScripting.get() && !Constant.ItemCollection.isEmpty()) {
-                Constant.FilesArray.clear();
-                Constant.ItemCollection.clear();
-            }
-            StackSupplier.updateMaxStack();
+    static void onConfigEvent(ModConfigEvent event) {
+        if (event.getConfig().getSpec() == CONFIG_SPEC) {
+            syncAndBroadcastToClients();
+            ServerConfigCache.CURRENT = new ServerConfigCache(CONFIG.enableScripting.get(), CONFIG.maxStackGlobally.getAsInt());
         }
     }
 
-    @SubscribeEvent
-    static void Reloading(ModConfigEvent.Reloading event)
-    {
-        if (event.getConfig().getModId().equals("stackupper") && event.getConfig().getType() == ModConfig.Type.COMMON) {
-            if (CONFIG.enableScripting.get()) {
-                if (Constant.FilesArray.isEmpty()) ConfigLibrary.addFile(Constants.StackUpperConfigRuleset, true);
-                if (!Constant.ItemCollection.isEmpty()) Constant.ItemCollection.clear();
-                ConfigLibrary.Start();
-            } else if (!CONFIG.enableScripting.get() && !Constant.ItemCollection.isEmpty()) {
-                Constant.FilesArray.clear();
-                Constant.ItemCollection.clear();
+    public static void syncAndBroadcastToClients() {
+        boolean enabled = CONFIG.enableScripting.get();
+        int max = CONFIG.maxStackGlobally.get();
+
+        Constant.ItemCollection.clear();
+        if (enabled) {
+            ConfigLibrary.addFile(Constants.StackUpperConfigRuleset, true);
+            ConfigLibrary.Start();
+        }
+        StackSupplier.updateMaxStack();
+
+        var server = net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer();
+        if (server != null) {
+            var payload = new SyncStackSizesPayload(enabled, max, Constants.generateSyncHashMap());
+            PacketDistributor.sendToAllPlayers(payload);
+        }
+    }
+
+    public record ServerConfigCache(boolean enabled_scripting, int global_max_stack) {
+        public static ServerConfigCache CURRENT = new ServerConfigCache(true, 64);
+
+        @Override
+        public boolean enabled_scripting() {
+            if (ServerLifecycleHooks.getCurrentServer() != null) {
+                return StackUpperConfig.CONFIG.enableScripting.get();
             }
-            StackSupplier.updateMaxStack();
+            return this.enabled_scripting;
+        }
+
+        @Override
+        public int global_max_stack() {
+            if (ServerLifecycleHooks.getCurrentServer() != null) {
+                return StackUpperConfig.CONFIG.maxStackGlobally.getAsInt();
+            }
+            return this.global_max_stack;
         }
     }
 }

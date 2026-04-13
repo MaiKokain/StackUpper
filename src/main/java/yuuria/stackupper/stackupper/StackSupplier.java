@@ -28,9 +28,9 @@ public class StackSupplier {
     }
 
     public static void updateMaxStack() {
-        int max = 64 == StackUpperConfig.CONFIG.maxStackGlobally.getAsInt()
+        int max = 64 == StackUpperConfig.ServerConfigCache.CURRENT.global_max_stack()
                 ? 64
-                : StackUpperConfig.CONFIG.maxStackGlobally.getAsInt();
+                : StackUpperConfig.ServerConfigCache.CURRENT.global_max_stack();
 
         if (!Constants.SyncedServerSizes.isEmpty()) {
             max = Math.max(max, Collections.max(Constants.SyncedServerSizes.values()));
