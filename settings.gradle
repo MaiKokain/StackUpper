@@ -3,12 +3,19 @@ pluginManagement {
         mavenLocal()
         mavenCentral()
         gradlePluginPortal()
-        maven { url = 'https://maven.neoforged.net/releases' }
+        maven {
+            url = "https://maven.kikugie.dev/snapshots"
+            name = "KikuGie Snapshots"
+        }
+        maven {
+            url = 'https://maven.neoforged.net/releases'
+
+        }
     }
 }
 
 plugins {
-    id "dev.kikugie.stonecutter" version "0.8.2"
+    id "dev.kikugie.stonecutter" version "0.9"
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
 }
 
@@ -16,7 +23,7 @@ stonecutter {
 
     centralScript = "build.gradle"
 
-    create(getRootProject()) {
+    create(rootProject) {
         versions("1.21", "1.21.4", "1.21.6", "1.21.10")
         vcsVersion = "1.21"
         branch("coremods") {
