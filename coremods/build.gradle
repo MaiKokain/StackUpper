@@ -40,3 +40,7 @@ jar {
         )
     }
 }
+// this is a hacky to get around stonecutter screaming about publishMods task missing for coremods
+tasks.register("publishMods", () -> {
+    return
+})
