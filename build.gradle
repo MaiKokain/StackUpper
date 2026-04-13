@@ -10,11 +10,18 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
-if (project.hasProperty('mod_version')) {
-    base.archivesName = "$mod_id-$mod_version-$minecraft_version"
-} else {
-    base.archivesName = "$mod_id-debug-$minecraft_version"
+allprojects {
+    ext.mod_version = null
 }
+
+if (!project.hasProperty("mod_version")) project.setProperty("mod_version", "0.0.0")
+base.archivesName = "$mod_id-$mod_version-$minecraft_version"
+version = property("mod_version")
+//if (project.hasProperty('mod_version')) {
+//    base.archivesName = "$mod_id-$mod_version-$minecraft_version"
+//} else {
+//    base.archivesName = "$mod_id-debug-$minecraft_version"
+//}
 
 repositories {
     mavenLocal()
@@ -37,8 +44,6 @@ neoForge {
 }
 
 dependencies {
-    var coremodProject = stonecutter.node.sibling("coremods")
-
     if (stonecutter.eval(stonecutter.current.version, ">=1.21.4")) {
         jarJar('org.antlr:antlr4-runtime:4.13.2')
     }
@@ -50,37 +55,6 @@ dependencies {
     }
 
     implementation(jarJar(group: 'yuuria.stackupper', name: "StackUpperConfigLibrary", version: '[1,)'))
-}
-
-publishMods {
-    if (!rootProject.hasProperty("mod_version")) {
-        System.out.println("Can't run publishMods, mod_version property is missing!")
-        return
-    }
-    file = jar.archiveFile
-    type = "STABLE"
-    changelog = rootProject.file("CHANGELOG.md").getText()
-    version = mod_version
-    displayName = "StackUpper ${mc_title}-${mod_version}"
-    modLoaders.add("neoforge")
-
-    dryRun = providers.environmentVariable("CURSEFORGE_TOKEN").getOrNull() == null
-        || providers.environmentVariable("MODRINTH_TOKEN").getOrNull() == null
-
-    curseforge {
-        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
-        projectId = curseforge_projectId
-        minecraftVersions.addAll(property("mc_targets").toString().split(' '))
-        clientRequired = true
-        serverRequired = true
-        changelogType = "markdown"
-    }
-
-    modrinth {
-        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
-        projectId = modrinth_projectId
-        minecraftVersions.addAll(property("mc_targets").toString().split(' '))
-    }
 }
 
 tasks.withType(ProcessResources).configureEach {
@@ -97,9 +71,6 @@ tasks.withType(ProcessResources).configureEach {
             mod_authors            : mod_authors,
             mod_description        : mod_description
     ]
-    if (project.hasProperty("mod_version")) {
-        replaceProperties.put("mod_version", "$mod_version")
-    }
     inputs.properties replaceProperties
 
     filesMatching(['META-INF/neoforge.mods.toml']) {
