@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'net.neoforged.moddev' version '2.0.137'
+    id "me.modmuss50.mod-publish-plugin" version "1.1.0"
 }
 
 java {
@@ -42,19 +43,45 @@ dependencies {
         jarJar('org.antlr:antlr4-runtime:4.13.2')
     }
 
-//    logger.info(coremodProject.branch["1.21"].location.toString())
     if (stonecutter.eval(stonecutter.current.version, ">=1.21.10")) {
-//        logger.info(coremodProject.branch["1.21.10"].location.toString())
         implementation(jarJar(project(":coremods:1.21.10")))
-//        implementation(jarJar(stonecutter.node.sibling("coremods:1.21.10")))
     } else {
-//        logger.info(coremodProject.branch["1.21"].location.toString())
         implementation(jarJar(project(":coremods:1.21")))
     }
 
     implementation(jarJar(group: 'yuuria.stackupper', name: "StackUpperConfigLibrary", version: '[1,)'))
 }
 
+publishMods {
+    if (!rootProject.hasProperty("mod_version")) {
+        System.out.println("Can't run publishMods, mod_version property is missing!")
+        return
+    }
+    file = jar.archiveFile
+    type = "STABLE"
+    changelog = rootProject.file("CHANGELOG.md").getText()
+    version = mod_version
+    displayName = "StackUpper ${mc_title}-${mod_version}"
+    modLoaders.add("neoforge")
+
+    dryRun = providers.environmentVariable("CURSEFORGE_TOKEN").getOrNull() == null
+        || providers.environmentVariable("MODRINTH_TOKEN").getOrNull() == null
+
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        projectId = curseforge_projectId
+        minecraftVersions.addAll(property("mc_targets").toString().split(' '))
+        clientRequired = true
+        serverRequired = true
+        changelogType = "markdown"
+    }
+
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        projectId = modrinth_projectId
+        minecraftVersions.addAll(property("mc_targets").toString().split(' '))
+    }
+}
 
 tasks.withType(ProcessResources).configureEach {
     var replaceProperties = [
