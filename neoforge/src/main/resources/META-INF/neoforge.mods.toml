@@ -1,0 +1,20 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+license = "${license}"
+issueTrackerURL = "${issue_url}"
+
+[[mods]]
+modId = "${id}"
+displayName = "${name}"
+version = "${version}"
+displayURL = "${homepage_url}"
+authors = "${authors}"
+modUrl = "${homepage_url}"
+
+description = '''${description}'''
+
+[[mixins]]
+config="${id}.mixins.json"
+
+[[mixins]]
+config="client.${id}.mixins.json"

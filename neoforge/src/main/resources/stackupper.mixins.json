@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "package": "yuuria.stackupper.stackupper.mixins",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "AnvilMenuMixin",
+    "ContainersMixin",
+    "ItemEntityMixin",
+    "ItemStackHandlerMixin",
+    "ItemStackMixin",
+    "SlotMixin",
+    "interfaces.ContainerMixin",
+    "interfaces.ItemInstanceMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
