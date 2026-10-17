@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "yuuria.stackupper.mixins.late",
+  "mixins": [
+  ],
+  "refmap": "mixins.stackupper.refmap.json",
+  "verbose": true
+}

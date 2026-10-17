@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "yuuria.stackupper.mixins.early",
+  "mixins": [
+    "InventoryHelperPatch",
+    "ItemStackPatch",
+    "NetHandlerPlayServerPatch",
+    "PacketBufferPatch",
+    "PacketUtilPatch",
+    "SlotPatch"
+  ],
+  "verbose": true,
+  "refmap": "mixins.stackupper.refmap.json",
+  "client": [
+    "client.RenderItemPatch"
+  ]
+}
