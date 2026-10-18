@@ -7,34 +7,36 @@ import yuuria.stackupper.core.StackUpperTransformer;
 import yuuria.stackupper.core.utils.PatchIReturn;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class IReturnCorePatch implements IStackUpPatch {
-    private static final List<String> STATIC_CLASS = Arrays.asList("slimeknights.mantle.tileentity.TileInventory");
-    private static final List<String> LIMIT_METHODS = Arrays.asList("getInventoryStackLimit", "func_70297_j_");
+    private static final Map<String, String[]> methodAndClass;
+    static {
+        methodAndClass = new HashMap<>();
+        methodAndClass.put("slimeknights.mantle.tileentity.TileInventory", new String[]{"getInventoryStackLimit", "func_70297_j_"});
+        methodAndClass.put("de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase", new String[]{"getMaxStackSize"});
+    }
 
     @Override
     public boolean canExecute(ClassNode classNode) {
-        return STATIC_CLASS.contains(classNode.name.replace('/', '.'));
+        return methodAndClass.containsKey(classNode.name.replace('/', '.'));
     }
 
     @Override
     public boolean canExecute(ClassNode classNode, String tName) {
-        return STATIC_CLASS.contains(tName);
+        return methodAndClass.containsKey(tName);
     }
 
     @Override
     public void execute(ClassNode classNode) {
+        String cName = classNode.name.replace("/", ".");
         for (MethodNode methodNode : classNode.methods) {
-            if (!isLimitMethod(methodNode)) continue;
-            if (PatchIReturn.patch(methodNode)) {
-                StackUpperTransformer.LOGGER.info("Patched {}.{} with IReturnCorePatch", classNode.name, methodNode.name);
+            if (Arrays.stream(methodAndClass.get(cName)).anyMatch(s -> s.equals(methodNode.name))) {
+                if (PatchIReturn.patch(methodNode)) {
+                    StackUpperTransformer.LOGGER.info("Patched {}.{} with ModsConstant64CorePatch", cName, methodNode.name);
+                }
             }
         }
-    }
-
-    private boolean isLimitMethod(MethodNode method) {
-//        if (!"()I".equals(method.desc)) return false;
-        return LIMIT_METHODS.contains(method.name);
     }
 }

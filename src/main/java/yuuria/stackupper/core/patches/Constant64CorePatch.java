@@ -11,12 +11,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ModsConstant64CorePatch implements IStackUpPatch {
+public class Constant64CorePatch implements IStackUpPatch {
     private static final Map<String, String[]> methodAndClass;
     static {
-        Map<String, String[]> classMethod = new HashMap<>();
-        classMethod.put("org.cyclops.colossalchests.tileentity.TileColossalChest", new String[]{"constructInventory"});
-        methodAndClass = Collections.unmodifiableMap(classMethod);
+        methodAndClass = new HashMap<>();
+        methodAndClass.put("org.cyclops.colossalchests.tileentity.TileColossalChest", new String[]{"constructInventory"});
+        methodAndClass.put("net.minecraft.inventory.Slot", new String[]{"getItemStackLimit", "func_178170_b", "getSlotStackLimit", "func_75219_a"});
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ModsConstant64CorePatch implements IStackUpPatch {
         for (MethodNode methodNode : classNode.methods) {
             if (Arrays.stream(methodAndClass.get(cleanedName)).anyMatch(s -> s.equals(methodNode.name))) {
                 if (PatchConstant64.patch(methodNode)) {
-                    StackUpperTransformer.LOGGER.info("Patched {}.{} with ModsConstant64CorePatch", cleanedName, methodNode.name);
+                    StackUpperTransformer.LOGGER.info("Patched {}.{} with Constant64CorePatch", cleanedName, methodNode.name);
                 }
             }
         }
